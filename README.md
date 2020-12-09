@@ -1,5 +1,6 @@
 ﻿**English**
-The aim of this programm is the loading firmware, cryptographic key or device identify information to UltraRay or XIMC controllers.
+The aim of this program is the loading firmware, cryptographic key or device identify information to UltraRay or XIMC 
+controllers.
 
 *Usage*: 
 
@@ -26,7 +27,7 @@ For example:
     "emu:///var/lib/ximc/virtual56.dat",
     "emu:///c:/temp/virtual56.dat",
     "emu:///c:/temp/virtual56.dat?serial=123"
-WARNING: Not use /dev/tty directly. Use simlinks.
+WARNING: Not use /dev/tty directly. Use symlinks.
 
 *KEY* is a cryptographic key.
 *SERIAL* is a device serial number.
@@ -35,19 +36,13 @@ WARNING: Not use /dev/tty directly. Use simlinks.
 For build this program you need 
 **on Linux** - go to src subdir and run commands:
 
-    $ cmake .
+    $ cmake
     $ make
     
 **on Windows** - use CMake-gui for Windows and create project for Microsoft Visual Studio 2013.
 (https://www.johnlamp.net/cmake-tutorial-3-gui-tool.html)
 
-Open the project. Select some debugging or release version of the project we will build.
-Correct project properties:
-
-`epcboot -> Properties-> Configurations Properties-> Linker-> General-> Additional Library Directories`
-
-and add the path $(OutDir).
-Build. 
+Open the project and build.
 
 This program launch from console, and write LOG to stderr.
 
@@ -58,7 +53,8 @@ Exchange with target device may be tested:
 - read log file.
 
 **Русский (Russian)**
-Это приложение предназначено для того, чтобы заливать прошивки, криптоключи и информацию об устройстве в контроллеры UltraRay и XIMC.
+Это приложение предназначено для того, чтобы заливать прошивки, криптоключи и информацию об устройстве в контроллеры 
+UltraRay и XIMC.
 
 *Использование*: 
 
@@ -85,7 +81,7 @@ Exchange with target device may be tested:
     "emu:///var/lib/ximc/virtual56.dat",
     "emu:///c:/temp/virtual56.dat",
     "emu:///c:/temp/virtual56.dat?serial=123"
-Не используйте com:///dev/tty.. для обращения к устройству, лучше используйте симлинк.
+Не используйте com:///dev/tty.. для обращения к устройству, лучше используйте символические ссылки.
 
 *KEY* - криптографический ключ,
 *SERIAL* - серийный номер устройства,
@@ -105,24 +101,14 @@ Exchange with target device may be tested:
 **Этот компилятор следует оставить.**
 После Configure нажать Generate.
 
-Открыть проект. Выбрать какую, отладочную (Debug) или основную (Release) версию проекта мы будем собирать.
-
-Поправить свойства проекта: на вкладке Solution Explorer
-
-`epcboot -> Properties-> Configurations Properties-> Linker-> General-> Additional Library Directories`
-
-Редактировать это поле, добавить путь $(OutDir). 
-Собрать библиотеку epcbootlib.
-Затем собрать epcboot.
+Открыть проект и собрать
 
 ЗАПУСК программы 
 
-осуществляется из консоли, синтаксис командной строки в разделе "Использование" лог пишется в stderr.
+Запускается из консоли, синтаксис командной строки в разделе "Использование" лог пишется в stderr.
 
 Обмен с целевым устройством, использующий это приложение, может быть протестирован следующим образом:
 - создаём переменную окружения BOOTLOG,
 - помещаем в неё путь к лог-файлу,
 - запускаем программу, использующую библиотеку,
 - читаем лог.
-
-

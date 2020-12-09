@@ -77,7 +77,7 @@ project (epcboot, C)
 
 if(WIN32)
   add_executable(epcboot main.c getopt.c)
-  target_link_libraries(epcboot epcbootlib.lib)
+  target_link_libraries(epcboot epcbootlib)
 else()
   add_executable(epcboot main.c)
   target_link_libraries(epcboot epcbootlib rt)
