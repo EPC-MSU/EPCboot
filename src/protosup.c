@@ -155,7 +155,7 @@ int command_port_send (device_metadata_t *metadata, const byte* command, size_t 
 		if (failed)
 		{
 			errcode = get_system_error_code();
-			log_system_error( L"write to port failed, write %d bytes instead of %d bytes, reason: ", n, amount );
+			log_system_error( L"write to port failed, write %d bytes instead of %d bytes", n, amount );
 			if (is_error_nodevice(errcode))
 				return result_serial_nodevice;
 			if (device_flush( metadata ) != result_ok)
@@ -237,14 +237,14 @@ int command_port_receive (device_metadata_t *metadata, byte* response, size_t re
 		}
 		else
 		{
-			log_error( L"unknown device type %d", metadata->type );
+			log_error( L"unknown device type: %d", metadata->type );
 			return result_serial_error;
 		}
 
 		if (failed)
 		{
 			errcode = get_system_error_code();
-			log_system_error( L"read from port failed, read %d bytes instead of %d, reason: ", n, amount );
+			log_system_error( L"read from port failed, read %d bytes instead of %d", n, amount );
 			if (is_error_nodevice(errcode))
 				return result_serial_nodevice;
 			if (device_flush( metadata ) != result_ok)
@@ -1169,8 +1169,8 @@ result_t URPC_CALLCONV close_device (device_t* id)
 {
 	result_t result;
 	lock_global();
-	log_debug(L"close_device id=%p");
-	fprintf(stderr, "close_device id=%p\n");
+	log_debug(L"close_device id=%i", *id);
+	fprintf(stdout, "close_device id=%i\n", *id);
 	if (id == NULL || *id == device_undefined)
 		result = result_error;
 	else

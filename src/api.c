@@ -46,7 +46,7 @@ static int key_parse(const char *key, uint8_t *rkey)
     memcpy(s, key + 2 * i, 2);
     if (s[0] == 0 || s[1] == 0)
     {
-      fprintf(stderr, "EPCboot: Key length less that 256. Error.\n");
+      fprintf(stderr, "EPCboot: Key length less than 256. Error.\n");
       return -1;
     }
     rkey[i] = (uint8_t) strtol(s, NULL, 16);
@@ -82,7 +82,7 @@ static device_t update_open(const char *name)
   {
     fprintf(stderr, "EPCboot: Can't open device %s\n", name);
 	if (strncmp(name, "com:", 4) != 0 && strncmp(name, "emu:", 4) != 0)
-		fprintf(stderr, "You write uncorrect device URL. You mast put 'com:' or 'emu:' at begin of url.\n");
+		fprintf(stderr, "Incorrect device URL. URL must begin with 'com:' or 'emu'.\n");
     if (strncmp(name, "com:///dev/tty", 14) == 0)
         fprintf(stderr, "Not try use /dev/tty directly. Use simlinks.\n");
     return device_undefined;
@@ -147,7 +147,7 @@ result_t URPC_CALLCONV urpc_firmware_update(const char* name, const uint8_t* dat
   }
   else 
   {
-    fprintf(stderr, "Data is not correct: data_len=%d segm_len=%d, is not divisible.\n");
+    fprintf(stderr, "Incorrect data: data_len=%d is not integer number of segments; segm_len=%d.\n", len, DATA_SEGM_LEN);
     return result_error;
   }
 
@@ -156,7 +156,7 @@ result_t URPC_CALLCONV urpc_firmware_update(const char* name, const uint8_t* dat
 
   if ((res=start_session(id, &st_input, &st_output)) != result_ok)
   {
-    fprintf(stderr, "EPCboot: Start sesion error %d.\n", res);
+    fprintf(stderr, "EPCboot: Start session error %d.\n", res);
     close_device(&id);
     return result_error;
   }
@@ -170,7 +170,7 @@ result_t URPC_CALLCONV urpc_firmware_update(const char* name, const uint8_t* dat
     cntr_len += DATA_SEGM_LEN;
     if (write_data(id, &wd) != result_ok) 
     {
-      fprintf(stderr, "EPCboot:  %d data segment wrote fail.");
+      fprintf(stderr, "EPCboot:  %d-th data segment writing fail.", i);
       end_session(id, &en_input, &en_output);
       close_device(&id);
       return result_error;
@@ -309,7 +309,7 @@ result_t URPC_CALLCONV urpc_write_ident(const char* name, const char* key, unsig
 
 	  if (legacy_sn_out.SerialNumber == ssn.SerialNumber)
 	  {
-		  fprintf(stderr, "Identy information was wrote correctly.\n");
+		  fprintf(stdout, "Identy information was written correctly.\n");
 		  return result_ok;
 	  }
 	  else
@@ -335,7 +335,7 @@ result_t URPC_CALLCONV urpc_write_ident(const char* name, const char* key, unsig
     out.HardwareBugfix == ssn.HardwareBugfix &&
     out.SerialNumber == ssn.SerialNumber)
     {
-		fprintf(stderr, "Identy information was wrote correctly.\n");
+		fprintf(stdout, "Identy information was written correctly.\n");
 		return result_ok;
     }
 	else

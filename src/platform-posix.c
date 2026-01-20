@@ -54,7 +54,7 @@ result_t open_port_serial (device_metadata_t *metadata, const char* name)
 	fd = open(name, O_RDWR | O_NOCTTY | O_NONBLOCK);
 	if (fd == -1)
 	{
-		log_system_error( L"unable to open port %s: ", name );
+		log_system_error( L"Unable to open port %s: ", name );
 		return result_error;
 	}
 
@@ -63,15 +63,15 @@ result_t open_port_serial (device_metadata_t *metadata, const char* name)
 	if (flock( fd, LOCK_EX|LOCK_NB ) == -1 && errno == EWOULDBLOCK)
 	{
 		close( fd );
-		log_error( L"unable to open locked port %s", name );
+		log_error( L"Unable to open locked port %s", name );
 		return result_error;
 	}
 
 	if (flock( fd, LOCK_EX ) == -1)
 	{
-		log_system_error( L"can't lock file" );
+		log_system_error( L"Can't lock file" );
 		close( fd );
-		log_error( L"unable to lock a port %s", name );
+		log_error( L"Unable to lock a port %s", name );
 		return result_error;
 	}
 
@@ -81,14 +81,14 @@ result_t open_port_serial (device_metadata_t *metadata, const char* name)
 	if (fcntl(fd, F_SETFL, 0) == -1)
 	{
 		close( fd );
-		log_system_error( L"error setting port settings: " );
+		log_system_error( L"Error setting port settings: " );
 		return result_error;
 	}
 
 	if (tcgetattr(fd, &options) == -1)
 	{
 		close( fd );
-		log_system_error( L"error getting port attrs: " );
+		log_system_error( L"Error getting port attrs: " );
 		return result_error;
 	}
 
@@ -96,7 +96,7 @@ result_t open_port_serial (device_metadata_t *metadata, const char* name)
 		cfsetospeed( &options, B115200 ) == -1)
 	{
 		close( fd );
-		log_system_error( L"error setting port speed: " );
+		log_system_error( L"Error setting port speed: " );
 		return result_error;
 	}
 
@@ -122,7 +122,7 @@ result_t open_port_serial (device_metadata_t *metadata, const char* name)
 	if (tcsetattr( fd, TCSAFLUSH, &options ) == -1)
 	{
 		close( fd );
-		log_system_error( L"error setting port attrs: " );
+		log_system_error( L"Error setting port attrs: " );
 		return result_error;
 	}
 
@@ -139,7 +139,7 @@ int close_port_serial (device_metadata_t *metadata)
 {
 	if (close( metadata->handle ) == -1)
 	{
-		log_system_error( L"error closing port: " );
+		log_system_error( L"Error closing port: " );
 		return result_serial_error;
 	}
 	return result_serial_ok;
@@ -149,7 +149,7 @@ int flush_port_serial (device_metadata_t *metadata)
 {
 	if (tcflush( metadata->handle, TCIOFLUSH ))
 	{
-		log_system_error( L"command flush port failed, reason: " );
+		log_system_error( L"Command flush port failed, reason: " );
 		return result_serial_error;
 	}
 	return result_serial_ok;
@@ -585,7 +585,7 @@ void URPC_CALLCONV msec_sleep(unsigned int msec)
 	ts.tv_sec = (time_t)(msec / 1E3);
 	ts.tv_nsec = (long)(msec*1E6 - ts.tv_sec*1E9);
 	if (nanosleep( &ts, NULL ) != 0)
-		log_system_error( L"nanosleep failed" );
+		log_system_error( L"Nanosleep failed" );
 }
 
 void get_wallclock_us(uint64_t* us)
@@ -642,14 +642,14 @@ mutex_t* mutex_init(unsigned int nonce)
 	mutex_t* mutex = malloc( sizeof(mutex_t) );
 	if (!mutex)
 	{
-		log_system_error( L"can't create semaphore" );
+		log_system_error( L"Can't create semaphore" );
 		return NULL;
 	}
 	/* thanks APUE for this idea */
 	do
 	{
 		if (counter)
-			log_error( L"cannot use semaphore %s, increasing suffix", name );
+			log_error( L"Cannot use semaphore %s, increasing suffix", name );
   		portable_snprintf( name, sizeof(name), "/sem-bootloader-%ld.%x.%d", (long)getpid(), nonce, counter++ );
 		mutex->impl = sem_open( name, O_CREAT|O_EXCL, 0777, 1 );
 	}
@@ -657,14 +657,14 @@ mutex_t* mutex_init(unsigned int nonce)
 	if (mutex->impl == SEM_FAILED)
 	{
 		free( mutex );
-		log_system_error( L"can't create semaphore" );
+		log_system_error( L"Can't create semaphore" );
 		return NULL;
 	}
 	/* unlink early */
 	if (sem_unlink( name ))
 	{
 		free( mutex );
-		log_system_error( L"can't unlink semaphore" );
+		log_system_error( L"Can't unlink semaphore" );
 		return NULL;
 	}
 	return mutex;
@@ -677,7 +677,7 @@ void mutex_close(mutex_t* mutex)
 		if (mutex->impl != SEM_FAILED)
 		{
 			if (sem_close( mutex->impl ) != 0)
-				log_system_error( L"can't close semaphore due to " );
+				log_system_error( L"Can't close semaphore due to " );
 		}
 		free( mutex );
 	}
@@ -687,22 +687,22 @@ void mutex_lock(mutex_t* mutex)
 {
 	if (!mutex || mutex->impl == SEM_FAILED)
 	{
-		log_error( L"no semaphore specified" );
+		log_error( L"No semaphore specified" );
 		return;
 	}
 	if (sem_wait( mutex->impl ) == -1)
-		log_system_error( L"can't wait on semaphore %p due to ", mutex->impl );
+		log_system_error( L"Can't wait on semaphore %p due to ", mutex->impl );
 }
 
 void mutex_unlock(mutex_t* mutex)
 {
 	if (!mutex || mutex->impl == SEM_FAILED)
 	{
-		log_error( L"no semaphore specified" );
+		log_error( L"No semaphore specified" );
 		return;
 	}
 	if (sem_post( mutex->impl ) == -1)
-		log_system_error( L"can't post on semaphore %p due to ", mutex->impl );
+		log_system_error( L"Can't post on semaphore %p due to ", mutex->impl );
 }
 
 #endif

@@ -200,7 +200,7 @@ result_t open_port_virtual (device_metadata_t *metadata, const char* virtual_pat
 		file = fopen( virtual_path, "wb+" );
 		if (file == NULL)
 		{
-			log_system_error( L"can't open virtual device %hs due to: ", virtual_path );
+			log_system_error( L"can't open virtual device %hs", virtual_path );
 			free( blob );
 			return result_error;
 		}
@@ -251,7 +251,7 @@ result_t open_port_virtual (device_metadata_t *metadata, const char* virtual_pat
 			file = fopen( virtual_path, "wb+" );
 			if (file == NULL)
 			{
-				log_system_error( L"can't open virtual device %hs due to: ", virtual_path );
+				log_system_error( L"can't open virtual device %hs", virtual_path );
 				free( blob );
 				return result_error;
 			}
@@ -293,7 +293,7 @@ result_t close_port_virtual (device_metadata_t *metadata)
 	/* Close a state file */
 	if (fclose( metadata->virtual_file ))
 	{
-		log_system_error( L"error closing virtual device: " );
+		log_system_error( L"error closing virtual device" );
 		return result_error;
 	}
 

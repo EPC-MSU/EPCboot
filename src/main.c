@@ -34,7 +34,7 @@ static int check_url(const char* url)
 {
     if (url == NULL)
     {
-        printf("You mast specify device URL.\n");
+        printf("You must specify device URL.\n");
         return 0;
     }
 
@@ -51,7 +51,7 @@ static int fw_update(const char *url, const char *path)
 
     if (path == NULL)
     {
-        fprintf(stderr, "You mast specify firmware file.\n");
+        fprintf(stderr, "You must specify firmware file.\n");
         return -1;
     }
 
@@ -69,7 +69,7 @@ static int fw_update(const char *url, const char *path)
     buf = (unsigned char*)calloc(len, 1);
     if (buf == NULL)
     {
-        fprintf(stderr, "To less memory! Exit.\n");
+        fprintf(stderr, "Not enough memory! Exit.\n");
         fclose(f);
         exit(1);
     }
@@ -87,8 +87,8 @@ static int fw_update(const char *url, const char *path)
     }
 
     res = urpc_firmware_update(url, buf, len);
-    if (res == 0) fprintf(stderr, "Ok\n");
-    else fprintf(stderr, "Fail\n");
+    if (res == 0) fprintf(stdout, "Ok\n");
+    else fprintf(stdout, "Fail\n");
 
     if (buf) free(buf);
     if (f) fclose(f);
@@ -99,9 +99,9 @@ static int fw_update(const char *url, const char *path)
 static void begin_log (char state, char* url, char* first, char* second)
 {
     time_t sec = time(NULL);
-    fprintf(stderr, "\n%sepcboot 0.2.3 %c %s\n", ctime(&sec), state, url);
-    fprintf(stderr, "%s\n", first);
-    if(state == 'I') fprintf(stderr, "%s\n", second);
+    fprintf(stdout, "\n%sepcboot 0.2.3 %c %s\n", ctime(&sec), state, url);
+    fprintf(stdout, "%s\n", first);
+    if(state == 'I') fprintf(stdout, "%s\n", second);
 }
 
 
