@@ -19,13 +19,13 @@ static void print_usage(const char* exe)
 {
     printf("Usage:\n");
     printf("%s -K -a PORT_URL -k KEY\n", exe);
-    printf("For set cryptographic key for device.\n");
+    printf("To set cryptographic key on device.\n");
     printf("OR\n");
-    printf("%s  -I -a PORT_URL -k KEY -s SERIAL -v MAJOR.MINOR.REVISION\n", exe);
-    printf("For set serial number of device and it's hardware version.\n");
+    printf("%s -I -a PORT_URL -k KEY -s SERIAL -v MAJOR.MINOR.REVISION\n", exe);
+    printf("To set serial number and hardware version on device.\n");
     printf("OR\n");
     printf("%s -F -a PORT_URL -f FILE\n", exe);
-    printf("For set new firmware\n");
+    printf("For set new firmware on device.\n");
     printf("OR\n");
     printf("%s -h\n", exe);
 }
