@@ -81,10 +81,10 @@ static device_t update_open(const char *name)
   if (id == device_undefined)
   {
     fprintf(stderr, "EPCboot: Can't open device %s\n", name);
-	if (strncmp(name, "com:", 4) != 0 && strncmp(name, "emu:", 4) != 0)
-		fprintf(stderr, "Incorrect device URL. URL must begin with 'com:' or 'emu'.\n");
+	  if (strncmp(name, "com:", 4) != 0 && strncmp(name, "emu:", 4) != 0)
+      fprintf(stderr, "Incorrect device URL. URL must begin with 'com:' or 'emu'.\n");
     if (strncmp(name, "com:///dev/tty", 14) == 0)
-        fprintf(stderr, "Not try use /dev/tty directly. Use simlinks.\n");
+      fprintf(stderr, "Use simlinks instead of using /dev/tty directly.\n");
     return device_undefined;
   }
 
@@ -211,7 +211,7 @@ result_t URPC_CALLCONV urpc_write_key(const char* name, const char* key)
   res = init_random(id, &irnd);
   if (res != result_ok)
   {
-    fprintf(stderr, "Can't init random. %d", res);
+    fprintf(stderr, "Couldn't init random keys. %d", res);
     return res;
   }
 
@@ -223,7 +223,7 @@ result_t URPC_CALLCONV urpc_write_key(const char* name, const char* key)
   printf("Ok\n");
 
   res = close_device(&id);
-  if ( res!= result_ok) return res;
+  if (res != result_ok) return res;
 
   return result_ok;
 }
@@ -253,8 +253,8 @@ result_t URPC_CALLCONV urpc_write_ident(const char* name, const char* key, unsig
   res = init_random(id, &irnd);
   if (res != result_ok)
   {
-    fprintf(stderr, "Can't init random. %d", res);
-        return res;
+    fprintf(stderr, "Couldn't init random keys. %d", res);
+    return res;
   }
 
   encrypted_key(&irnd, &key_struct);
@@ -291,7 +291,7 @@ result_t URPC_CALLCONV urpc_write_ident(const char* name, const char* key, unsig
   res = set_serial_number(id, &ssn);
   if (res != result_ok)
   {
-    fprintf(stderr, "EPCBoot: Can't set ident information to device. set_serial_number() return %d\n", res);
+    fprintf(stderr, "EPCBoot: Failed to set new ident info on device. set_serial_number() return %d\n", res);
     return res;
   }
 
@@ -309,14 +309,13 @@ result_t URPC_CALLCONV urpc_write_ident(const char* name, const char* key, unsig
 
 	  if (legacy_sn_out.SerialNumber == ssn.SerialNumber)
 	  {
-		  fprintf(stdout, "Identy information was written correctly.\n");
+		  fprintf(stdout, "Ident info was written correctly.\n");
 		  return result_ok;
 	  }
 	  else
 	  {
-		  fprintf(stderr, "ERROR: try write %d   %d.%d.%d    Read %d\n",
-			  ssn.SerialNumber, ssn.HardwareMajor, ssn.HardwareMinor, ssn.HardwareBugfix,
-			  legacy_sn_out.SerialNumber);
+		  fprintf(stderr, "ERROR: Tried writing %d   %d.%d.%d    got as result %d\n",
+			  ssn.SerialNumber, ssn.HardwareMajor, ssn.HardwareMinor, ssn.HardwareBugfix, legacy_sn_out.SerialNumber);
 		  return result_error;
 	  }
   }
@@ -326,7 +325,7 @@ result_t URPC_CALLCONV urpc_write_ident(const char* name, const char* key, unsig
     res = get_identity_information(id, &out);
     if (res != result_ok)
     {
-      fprintf(stderr, "EPCBoot: Can't get ident information from device. get_identity_information() return %d\n", res);
+      fprintf(stderr, "EPCBoot: Failed to receive new ident info from device. get_identity_information() return %d\n", res);
       return res;
     }
 
@@ -335,16 +334,16 @@ result_t URPC_CALLCONV urpc_write_ident(const char* name, const char* key, unsig
     out.HardwareBugfix == ssn.HardwareBugfix &&
     out.SerialNumber == ssn.SerialNumber)
     {
-		fprintf(stdout, "Identy information was written correctly.\n");
-		return result_ok;
+		  fprintf(stdout, "Ident info was written correctly.\n");
+		  return result_ok;
     }
-	else
-	{
-		fprintf(stderr, "ERROR: try write %d   %d.%d.%d    Read %d   %d.%d.%d\n",
-			ssn.SerialNumber, ssn.HardwareMajor, ssn.HardwareMinor, ssn.HardwareBugfix,
-			out.SerialNumber, out.HardwareMajor, out.HardwareMinor, out.HardwareBugfix);
-		return result_error;
-	}
+	  else
+	  {
+		  fprintf(stderr, "ERROR: Tried writing %d   %d.%d.%d    got as result %d   %d.%d.%d\n",
+        ssn.SerialNumber, ssn.HardwareMajor, ssn.HardwareMinor, ssn.HardwareBugfix,
+        out.SerialNumber, out.HardwareMajor, out.HardwareMinor, out.HardwareBugfix);
+		  return result_error;
+	  }
   }
 
   return result_ok;
@@ -353,4 +352,3 @@ result_t URPC_CALLCONV urpc_write_ident(const char* name, const char* key, unsig
 #if defined(__cplusplus)
 };
 #endif
-
