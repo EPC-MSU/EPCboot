@@ -149,7 +149,7 @@ int flush_port_serial (device_metadata_t *metadata)
 {
 	if (tcflush( metadata->handle, TCIOFLUSH ))
 	{
-		log_system_error( L"Command flush port failed, reason: " );
+		log_system_error( L"Flush port command failed, reason: " );
 		return result_serial_error;
 	}
 	return result_serial_ok;
