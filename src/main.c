@@ -99,7 +99,7 @@ static int fw_update(const char *url, const char *path)
 static void begin_log (char state, char* url, char* first, char* second)
 {
     time_t sec = time(NULL);
-    fprintf(stdout, "\n%sepcboot 0.2.3 %c %s\n", ctime(&sec), state, url);
+    fprintf(stdout, "\n%sepcboot 0.2.4 %c %s\n", ctime(&sec), state, url);
     fprintf(stdout, "%s\n", first);
     if(state == 'I') fprintf(stdout, "%s\n", second);
 }
