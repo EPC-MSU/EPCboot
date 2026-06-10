@@ -1,4 +1,5 @@
 ﻿**English**
+
 The aim of this program is the loading firmware, cryptographic key or device identify information to UltraRay or XIMC 
 controllers.
 
@@ -49,6 +50,7 @@ Exchange with target device may be tested:
 - read log file.
 
 **Русский (Russian)**
+
 Это приложение предназначено для того, чтобы заливать прошивки, криптоключи и информацию об устройстве в контроллеры UltraRay и XIMC.
 
 *Использование*: 
