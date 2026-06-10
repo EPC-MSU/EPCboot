@@ -447,7 +447,7 @@ result_t command_checked_impl (device_t id, const void* command, size_t command_
 
 	if (response_len && !response)
 	{
-		log_error( L"command_checked can't read to empty buffer" );
+		log_error( L"command_checked: Read failed. Buffer is NULL, but expected %zu bytes", response_len );
 	}
 
 	// send command
