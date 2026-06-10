@@ -155,7 +155,7 @@ int command_port_send (device_metadata_t *metadata, const byte* command, size_t 
 		if (failed)
 		{
 			errcode = get_system_error_code();
-			log_system_error( L"write to port failed, write %d bytes instead of %d bytes", n, amount );
+			log_system_error( L"write to port failed, written %d bytes instead of %d bytes", n, amount );
 			if (is_error_nodevice(errcode))
 				return result_serial_nodevice;
 			if (device_flush( metadata ) != result_ok)
@@ -244,7 +244,7 @@ int command_port_receive (device_metadata_t *metadata, byte* response, size_t re
 		if (failed)
 		{
 			errcode = get_system_error_code();
-			log_system_error( L"read from port failed, read %d bytes instead of %d", n, amount );
+			log_system_error( L"read from port failed, got %d bytes instead of %d", n, amount );
 			if (is_error_nodevice(errcode))
 				return result_serial_nodevice;
 			if (device_flush( metadata ) != result_ok)
@@ -583,7 +583,7 @@ result_t check_in_overrun_raw(size_t data_count, size_t buf_size)
 	result_t result = result_ok;;
 	if (data_count != buf_size)
 	{
-		log_error( L"buffer incoming overrun %d vs buf size %d", data_count, buf_size );
+		log_error( L"incoming buffer overrun %d vs buf size %d", data_count, buf_size );
 		result = result_error;
 	}
 	return result;
@@ -629,7 +629,7 @@ result_t check_out_overrun (size_t data_count, size_t buf_size)
 {
 	if (data_count != buf_size)
 	{
-		log_error( L"buffer outgoing overrun %d vs buf size %d", data_count, buf_size );
+		log_error( L"outgoing buffer overrun %d vs buf size %d", data_count, buf_size );
 		return result_error;
 	}
 	return result_ok;
@@ -639,7 +639,7 @@ result_t check_out_atleast_overrun (size_t data_count, size_t buf_size)
 {
 	if (data_count > buf_size)
 	{
-		log_error( L"buffer outgoing overrun %d vs buf size %d", data_count, buf_size );
+		log_error( L"outgoing buffer overrun %d vs buf size %d", data_count, buf_size );
 		return result_error;
 	}
 	return result_ok;
