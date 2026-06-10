@@ -57,3 +57,5 @@ Temporary Items
 # Idea
 .idea
 
+# Custom folders
+build/
