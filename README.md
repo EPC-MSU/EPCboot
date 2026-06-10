@@ -40,7 +40,7 @@ epcboot -h
 To build this program, you need to:
 - **on Linux** - go to `src` subdirectory and run the following commands:
   ```bash
-  $ cmake
+  $ cmake .
   $ make
   ```
 - **on Windows** - use CMake-gui to generate a project for Microsoft Visual Studio 2013 (https://www.johnlamp.net/cmake-tutorial-3-gui-tool.html).
