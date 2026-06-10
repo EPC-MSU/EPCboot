@@ -3,18 +3,20 @@
 The aim of this program is the loading firmware, cryptographic key or device identify information to UltraRay or XIMC 
 controllers.
 
-*Usage*: 
+*Usage*
 
-    epcboot -K -a PORT_URL -k KEY
-    To set cryptographic key on device.
-    OR
-    epcboot -I -a PORT_URL -k KEY -s SERIAL -v MAJOR.MINOR.REVISION
-    To set serial number and hardware version on device.
-    OR
-    epcboot -F -a PORT_URL -f FILE
-    To set new firmware on device.
-    OR
-    epcboot -h
+```
+epcboot -K -a PORT_URL -k KEY
+To set cryptographic key on device.
+OR
+epcboot -I -a PORT_URL -k KEY -s SERIAL -v MAJOR.MINOR.REVISION
+To set serial number and hardware version on device.
+OR
+epcboot -F -a PORT_URL -f FILE
+To set new firmware on device.
+OR
+epcboot -h
+```
 
 - *PORT_URL* is device name.
   Device name has form "com:port" or "emu:file" for virtual device.
@@ -33,13 +35,18 @@ controllers.
 - *SERIAL* is a device serial number.
 - *FILE* is a path to firmware file. Do not use "~" in this path.
 
+*Building*
+
 To build this program, you need to:
-- **on Linux** - go to src subdirectory and run the following commands:
+- **on Linux** - go to `src` subdirectory and run the following commands:
   ```bash
   $ cmake
   $ make
   ```
-- **on Windows** - use CMake-gui to generate a project for Microsoft Visual Studio 2013 (https://www.johnlamp.net/cmake-tutorial-3-gui-tool.html). Open the project and build.
+- **on Windows** - use CMake-gui to generate a project for Microsoft Visual Studio 2013 (https://www.johnlamp.net/cmake-tutorial-3-gui-tool.html).
+  Open the project and build.
+
+*Running*
 
 This program launch from console, and write LOG to stderr.
 
@@ -53,18 +60,20 @@ Exchange with target device may be tested:
 
 Это приложение предназначено для того, чтобы заливать прошивки, криптоключи и информацию об устройстве в контроллеры UltraRay и XIMC.
 
-*Использование*: 
+*Использование*
 
-    epcboot -K -a PORT_URL -k KEY
-    To set cryptographic key on device.
-    OR
-    epcboot -I -a PORT_URL -k KEY -s SERIAL -v MAJOR.MINOR.REVISION
-    To set serial number and hardware version on device.
-    OR
-    epcboot -F -a PORT_URL -f FILE
-    To set new firmware on device.
-    OR
-    epcboot -h
+```
+epcboot -K -a PORT_URL -k KEY
+To set cryptographic key on device.
+OR
+epcboot -I -a PORT_URL -k KEY -s SERIAL -v MAJOR.MINOR.REVISION
+To set serial number and hardware version on device.
+OR
+epcboot -F -a PORT_URL -f FILE
+To set new firmware on device.
+OR
+epcboot -h
+```
 
 - *PORT_URL* - имя устройства.
   Имя устройства имеет вид "com:port" или "emu:file" для виртуального устройства.
@@ -82,23 +91,27 @@ Exchange with target device may be tested:
 - *SERIAL* - серийный номер устройства.
 - *FILE* - путь к прошивке. Не используйте "~" в пути к файлу.
 
-Сборка программы:
-- **под Linux** - в поддиректории src запустить команды:
+*Сборка*
+
+Чтобы собрать приложение:
+- **под Linux** - в поддиректории `src` выполните команды:
   ```bash
   $ cmake .
   $ make
   ```
-- **под Windows** - с помощью CMake-gui сгенерировать проект для Microsoft Visual Studio 2013 (см. https://www.johnlamp.net/cmake-tutorial-3-gui-tool.html).
-  Записываем откуда брать исходники, куда класть бинарники и нажимаем кнопку Configue.
+- **под Windows** - с помощью CMake-gui сгенерируйте проект для Microsoft Visual Studio 2013 (см. https://www.johnlamp.net/cmake-tutorial-3-gui-tool.html).
+  Укажите, откуда брать исходники, куда класть бинарники и нажите кнопку `Configue`.
   После этого CMake-gui предложит выбрать компилятор. По умолчанию MSVS-2013, Win32.
   **Этот компилятор следует оставить.**
-  После Configure нажать Generate.
-  Открыть проект и собрать
+  Нажмите кнопку `Generate`.
+  Откройте проект и соберите.
 
-Программа запускается из консоли, синтаксис командной строки в разделе "Использование", лог пишется в stderr.
+*Запуск*
+
+Программа запускается из консоли, синтаксис командной строки приведен в разделе "Использование", лог пишется в stderr.
 
 Обмен с целевым устройством, использующим это приложение, может быть протестирован следующим образом:
-- создаём переменную окружения BOOTLOG,
-- помещаем в неё путь к лог-файлу,
-- запускаем программу, использующую библиотеку,
-- читаем лог.
+- создайте переменную окружения BOOTLOG,
+- поместите в неё путь к лог-файлу,
+- запустите программу, использующую библиотеку,
+- прочтите лог.
